@@ -11,6 +11,10 @@
 #include <time.h>
 #include <ctype.h>
 
+#ifndef DJGPP
+#include <opencbm.h>
+#endif
+
 #include "mnibarch.h"
 #include "gcr.h"
 #include "nibtools.h"
@@ -34,10 +38,10 @@ int start_track, end_track, track_inc;
 int reduce_sync;
 int fix_gcr, aggressive_gcr;
 int align;
-unsigned int lpt[4];
-int lpt_num;
+extern unsigned int lpt[4];
+extern int lpt_num;
 int drivetype;
-unsigned int floppybytes;
+extern unsigned int floppybytes;
 int imagetype;
 int mode;
 int verify;

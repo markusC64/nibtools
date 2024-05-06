@@ -9,6 +9,10 @@
 #include <time.h>
 #include <ctype.h>
 
+#ifndef DJGPP
+#include <opencbm.h>
+#endif
+
 #include "mnibarch.h"
 #include "gcr.h"
 #include "nibtools.h"

@@ -12,9 +12,13 @@
 
 #include "mnibarch.h"
 #include "gcr.h"
-#include "nibtools.h"
+#include "drive.h"
+#include "fileio.h"
 #include "lz.h"
+#include "nibtools_version.h"
 #include "prot.h"
+
+void usage(void);
 
 int _dowildcard = 1;
 

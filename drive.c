@@ -8,6 +8,10 @@
 #include <time.h>
 #include <signal.h>
 
+#ifndef DJGPP
+#include <opencbm.h>
+#endif
+
 #include "mnibarch.h"
 #include "gcr.h"
 #include "nibtools.h"

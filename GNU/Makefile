@@ -47,30 +47,35 @@ dos:
 		CFLAGS="-I include/DOS/ $(CFLAGS)" \
 		EXE=".exe" \
 		-f GNU/Makefile \
-		nibread nibwrite nibconv nibscan nibrepair
+		nibconv nibscan nibrepair nibread nibwrite
 
 linux:
-	${MAKE} CFLAGS="-I include/LINUX/ -I ${CBM_LNX_PATH}/include ${CFLAGS}  -std=c99" \
+	${MAKE} CFLAGS="-I include/LINUX/ -I ${CBM_LNX_PATH}/include ${CFLAGS}  -std=c99 -D_BSD_SOURCE" \
 		LDFLAGS="-L${CBM_LNX_PATH}/lib -lopencbm" \
 		-f GNU/Makefile \
-		nibread nibwrite nibconv nibscan nibrepair nibsrqtest
+		nibconv nibscan nibrepair nibread nibwrite nibsrqtest
 
 win32:
 	${MAKE} CFLAGS="-I include/WINDOWS/ -I ${CBM_WIN_PATH}/include -D WIN32 ${CFLAGS} -std=c99" \
 		LDFLAGS="-L${CBM_WIN_PATH}/bin/i386/ -lopencbm" \
 		EXE=".exe" \
 		-f GNU/Makefile \
-		nibread nibwrite nibconv nibscan nibrepair nibsrqtest
+		nibconv nibscan nibrepair nibread nibwrite nibsrqtest
 
 win64:
 	${MAKE} CFLAGS="-I include/WINDOWS/ -I ${CBM_WIN_PATH}/include -D WIN32 ${CFLAGS} -std=c99" \
 		LDFLAGS="-L${CBM_WIN_PATH}/bin/amd64/ -lopencbm" \
 		EXE=".exe" \
 		-f GNU/Makefile \
-		nibread nibwrite nibconv nibscan nibrepair nibsrqtest
+		nibconv nibscan nibrepair nibread nibwrite nibsrqtest
 
 # Warning level.  Don't reduce, fix your new code instead.
-WARNS= -W -Wall -Wstrict-prototypes -Wno-unused-parameter -Wpointer-arith 
+WARNS= -W -Wall -Wstrict-prototypes -Wno-unused-parameter -Wpointer-arith \
+       -Wextra -Wconversion -pedantic \
+       -Werror-implicit-function-declaration \
+       -Wsign-conversion
+#       -Werror=format-security
+
 
 # Common objects
 OBJ=gcr.o prot.o fileio.o crc.o md5.o lz.o
@@ -89,7 +94,7 @@ buildall: ${PROG}
 
 nibread: ${OBJ} ${NIBREAD_OBJ} ${NIBTOOLS_BIN} ${ARCH_OBJ}
 	${CC} -o nibread$(EXE) ${OBJ} ${NIBREAD_OBJ} ${ARCH_OBJ} ${LDFLAGS}
-	
+
 nibsrqtest: ${NIBSRQTEST_OBJ} ${NIBTOOLS_BIN} ${ARCH_OBJ}
 	${CC} -o nibsrqtest$(EXE) ${NIBSRQTEST_OBJ} ${ARCH_OBJ} ${LDFLAGS}
 
@@ -103,20 +108,20 @@ nibsrqtest.c: ${NIBTOOLS_BIN}
 nibwrite.c: ${NIBTOOLS_BIN} 
 
 nibconv: ${OBJ} nibconv.o
-	${CC} -o nibconv$(EXE) nibconv.o ${OBJ} $(LDFLAGS)
+	${CC} -o nibconv$(EXE) nibconv.o ${OBJ}
 
 nibrepair: ${OBJ} nibrepair.o
-	${CC} -o nibrepair$(EXE) nibrepair.o ${OBJ} $(LDFLAGS)
+	${CC} -o nibrepair$(EXE) nibrepair.o ${OBJ}
 
 nibscan: ${OBJ} nibscan.o
-	${CC} -o nibscan$(EXE) nibscan.o ${OBJ} $(LDFLAGS)
+	${CC} -o nibscan$(EXE) nibscan.o ${OBJ}
 
 clean:
 	${RM} *.o ${MNIB_BIN} *.bin *.inc nib*.exe
 
 distclean: clean
 	${RM} ${PROG} *.exe
-	
+
 drive.o: nibtools_1541.inc nibtools_1541_ihs.inc nibtools_1571.inc nibtools_1571_ihs.inc nibtools_1571_srq.inc nibtools_1571_srq_test.inc
 
 *.o: gcr.h nibtools.h
@@ -136,7 +141,7 @@ nibtools_1541_ihs.bin: nibtools_15x1_ihs.asm
 nibtools_1571_ihs.bin: nibtools_15x1_ihs.asm
 	$(CA65) $(CA65_FLAGS) -D DRIVE=1571 -o $*.tmp $<
 	$(LD65) -o $@ --target none $*.tmp && rm -f $*.tmp
-	
+
 nibtools_1571_srq.bin: nibtools_1571_srq.asm
 	$(CA65) $(CA65_FLAGS) -D DRIVE=1571 -o $*.tmp $<
 	$(LD65) -o $@ --target none $*.tmp && rm -f $*.tmp
@@ -144,7 +149,7 @@ nibtools_1571_srq.bin: nibtools_1571_srq.asm
 nibtools_1571_srq_test.bin: nibtools_1571_srq_test.asm
 	$(CA65) $(CA65_FLAGS) -D DRIVE=1571 -o $*.tmp $<
 	$(LD65) -o $@ --target none $*.tmp && rm -f $*.tmp
-	
+
 .bin.inc:
 	test -s $< && od -txC -v -An $< | \
 	sed 's/\([0-9a-f]\{2\}\) */0x\1,/g; $$s/,$$//' > $@

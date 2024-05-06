@@ -36,3 +36,5 @@ WINBUILD-nibread/objfre*
 /obj*
 /objchk*
 /objfre*
+*.o
+*~
