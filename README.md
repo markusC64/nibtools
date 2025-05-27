@@ -1,6 +1,6 @@
 # NIBTools - Commodore 1541/1571 disk image nibbler
 
-homepage: https://c64preservation.com/dp.php?pg=nibtools
+homepage: https://c64preservation.rittwage.com/dp.php?pg=nibtools
 
 NIBTOOLS is copyrighted
 (C) 2005 Pete Rittwage and the C64 Preservation Project team
@@ -81,7 +81,7 @@ the XE1541/XA1541 and the XP1541/71 cables, or XEP/XAP/XMP combo cable..
 
 ##References
 
-The latest version of this program is available on http://c64preservation.com/nibtools
+The latest version of this program is available on https://c64preservation.rittwage.com/dp.php?pg=nibtools
 
 [1] Circuit-diagrams and order form for the adaptor and cables
       http://sta.c64.org/cables.html  (diagrams and shop for X-cables)
