@@ -22,7 +22,7 @@ i. e. the content that should be on track 1 is actually on track (1+k),
 the content that should be on track 2 is actually on track (2+k) and so on. 
 
 
-##Introduction
+## Introduction
 
 NIBTOOLS is a disk transfer program designed for copying original disks 
 and converting into the G64 and D64 disk image formats. These disk images
@@ -47,7 +47,7 @@ REQUIREMENTS:
   Linux with OpenCBM 0.4.0 or higher,
   MS/DR/Caldera DOS and cwsdpmi.exe software (no longer tested but still compiles with DJGPP for old <=P3 hardware)
      
-##Usage
+## Usage
 
 Reading real disks into disk images:
 
@@ -79,7 +79,7 @@ the XE1541/XA1541 and the XP1541/71 cables, or XEP/XAP/XMP combo cable..
     nibwrite filename.d64
 
 
-##References
+## References
 
 The latest version of this program is available on https://c64preservation.rittwage.com/dp.php?pg=nibtools
 
